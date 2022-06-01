@@ -1,0 +1,99 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <h3 class="mt-5 mb-5">Añadir Proveedor</h3>
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="col-md-6 offset-md-3">
+            {{ form_start(form) }}
+                <div class="form-group">
+                    <h5>Nombre del Proveedor</h5>
+                    {{ form_widget(form.name, {'attr':{'class':'form-control','placeholder':'Proveedor'}}) }}
+                </div>
+                <div class="form-group">
+                    <h5>Correo Electrónico</h5>
+                    {{ form_widget(form.mail, {'type':'email','attr':{'class':'form-control','placeholder':'proveedor@gmail.com'}}) }}
+                </div>
+                <div class="form-group">
+                    <h5>Teléfono de contacto</h5>
+                    {{ form_widget(form.phone, {'type':'phone','attr':{'class':'form-control','placeholder':'977696512','pattern':'^(9[0-9]{8})|(8[0-9]{8})|(7[0-9]{8})|(6[0-9]{8})$'}}) }}
+                </div>
+                <div class="form-group">
+                    <h5>Tipo de proveedor</h5>
+                    <div>
+                        {{ form_widget(form.hotelSupplier) }}
+                        <label>Hotel</label><br>
+                    </div>
+                    <div>
+                        {{ form_widget(form.trackSupplier) }}
+                        <label>Pista</label><br>
+                    </div>
+                    <div>
+                        {{ form_widget(form.complementSupplier) }}
+                        <label>Complemento</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <h5>Proveedor Activo</h5>
+                    {{ form_widget(form.isActive) }}
+                    <label>(Marca sólo si está activo)</label>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-info mt-2 text-white">Añade</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+
+<script>
+    var supplier_hotelSupplier;
+    var supplier_trackSupplier;
+    var supplier_complementSupplier;
+    var array_suplier_types;
+
+    document.addEventListener('DOMContentLoaded', function(event) {
+        supplier_hotelSupplier = document.getElementById("supplier_hotelSupplier");
+        supplier_hotelSupplier.type="radio";
+        supplier_hotelSupplier.classList.add("supplierType");
+        supplier_hotelSupplier.checked=true;
+        supplier_hotelSupplier.value="1";
+
+        supplier_trackSupplier = document.getElementById("supplier_trackSupplier");
+        supplier_trackSupplier.type="radio";
+        supplier_trackSupplier.classList.add("supplierType");
+        supplier_trackSupplier.checked=false;
+        supplier_trackSupplier.value="0";
+
+        supplier_complementSupplier = document.getElementById("supplier_complementSupplier");
+        supplier_complementSupplier.type="radio";
+        supplier_complementSupplier.classList.add("supplierType");
+        supplier_complementSupplier.checked=false;
+        supplier_complementSupplier.value="0";
+
+        array_suplier_types = document.getElementsByClassName("supplierType");
+
+        supplier_hotelSupplier.addEventListener("click", () =>{ changeSelectedValue(supplier_hotelSupplier.id, array_suplier_types) });
+        supplier_trackSupplier.addEventListener("click", () =>{ changeSelectedValue(supplier_trackSupplier.id, array_suplier_types) });
+        supplier_complementSupplier.addEventListener("click", () =>{ changeSelectedValue(supplier_complementSupplier.id, array_suplier_types) });
+    });
+
+    function changeSelectedValue(id, array_suplier_types) {
+        for (var i = 0; i < array_suplier_types.length; i++) {
+            if (array_suplier_types[i].id == id) {
+                document.getElementById(array_suplier_types[i].id).value = "1";
+                document.getElementById(array_suplier_types[i].id).checked = true;
+            } else {
+                document.getElementById(array_suplier_types[i].id).value = "0";
+                document.getElementById(array_suplier_types[i].id).checked = false;
+            }
+        }
+    }
+</script>
+{% endblock %}
