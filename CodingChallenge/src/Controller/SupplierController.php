@@ -68,6 +68,7 @@ class SupplierController extends AbstractController
                 if ($userExists[0]->getId() == $supplier->getId()) {
                     $em->persist($supplier);
                     $em->flush();
+                    $this->addFlash('notice','Proveedor editado correctamente!');
                     return $this->redirectToRoute('app_supplier');
                 } else {
                     $this->addFlash('notice','Este correo pertenece a otro empleado!');
@@ -91,7 +92,7 @@ class SupplierController extends AbstractController
         $em->remove($data);
         $em->flush();
         $this->addFlash('notice','Proveedor borrado con exito!');
-        
+
         return $this->redirectToRoute('app_supplier');
     }
 }
