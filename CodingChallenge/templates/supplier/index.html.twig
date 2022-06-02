@@ -1,20 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SupplierController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'F:/xampp/htdocs/CodingChallengeViajesParaTi/CodingChallenge/src/Controller/SupplierController.php'|file_link(0) }}">src/Controller/SupplierController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'F:/xampp/htdocs/CodingChallengeViajesParaTi/CodingChallenge/templates/supplier/index.html.twig'|file_link(0) }}">templates/supplier/index.html.twig</a></code></li>
-    </ul>
+<div class="container">
+    <table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Mail</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Activo</th>
+        <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for data in suppliers %}
+        <tr>
+        <th scope="row">{{data.id}}</th>
+        <td>{{data.name}}</td>
+        <td>{{data.mail}}</td>
+        <td>{{data.phone}}</td>
+        {% if data.hotelSupplier == 1 %}
+            <td>Hotel</td>
+        {% elseif data.trackSupplier == 1 %}
+            <td>Pista</td>
+        {% else %}
+            <td>Complemento</td>
+        {% endif %}
+        {% if data.isActive == 1 %}
+            <td>Sí</td>
+        {% else %}
+            <td>No</td>
+        {% endif %}
+        <td>
+            <a class="btn btn-warning" href="{{ path('update', {'id':data.id}) }}">Edita</a>
+            <a class="btn btn-danger" href="{{ path('delete', {'id':data.id}) }}">Elimina</a>
+        </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
 </div>
 {% endblock %}
