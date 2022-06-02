@@ -86,6 +86,12 @@ class SupplierController extends AbstractController
      * @Route("/delete/{id}", name="delete")
      */
     public function delete(Request $request, $id) {
+        $data = $this->getDoctrine()->getRepository(Supplier::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($data);
+        $em->flush();
+        $this->addFlash('notice','Proveedor borrado con exito!');
         
+        return $this->redirectToRoute('app_supplier');
     }
 }

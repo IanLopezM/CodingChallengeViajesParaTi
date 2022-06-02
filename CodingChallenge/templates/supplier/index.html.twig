@@ -2,6 +2,16 @@
 
 {% block body %}
 <div class="container">
+    <div class="row">
+        <div class="col text-center mt-4 mb-4">
+            <a class="btn btn-primary" href="{{ path('create') }}">Añade un proveedor</a>
+        </div>
+    </div>
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-success mt-4 mb-4">
+                {{ message }}
+            </div>
+        {% endfor %}
     <table class="table table-striped">
     <thead>
         <tr>
